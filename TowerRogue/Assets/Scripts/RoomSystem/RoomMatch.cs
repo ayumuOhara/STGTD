@@ -12,6 +12,8 @@ public class RoomMatch : MonoBehaviourPunCallbacks
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
+
         // ƒV[ƒ“‘JˆÚ‚ğe‚É“¯Šú
         PhotonNetwork.AutomaticallySyncScene = true;
     }
