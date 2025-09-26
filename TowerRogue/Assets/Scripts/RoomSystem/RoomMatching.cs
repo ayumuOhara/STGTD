@@ -4,9 +4,10 @@ using TMPro;
 using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 
-public class RoomMatch : MonoBehaviourPunCallbacks
+public class RoomMatching : MonoBehaviourPunCallbacks
 {
     const int MAX_PLAYER_NUM = 2;   // 参加可能人数
+    public bool isConnecting;       // 接続中フラグ
 
     [SerializeField] TMP_InputField nameField;
 
@@ -18,21 +19,31 @@ public class RoomMatch : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // ソロオフライン選択
+    public void SoloOffline()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.OfflineMode = true;
+        PhotonNetwork.JoinRandomRoom();
     }
 
-    // Update is called once per frame
-    void Update()
+    // マルチオンライン選択
+    public void MultiOnline()
     {
-        
+        PhotonNetwork.ConnectUsingSettings();
+        isConnecting = true;
+    }
+
+    // マスターサーバーに接続完了
+    public override void OnConnectedToMaster()
+    {
+        isConnecting = false;
     }
 
     // ルーム作成
     public void CreateRoom()
     {
+        if (!PhotonNetwork.IsConnectedAndReady) return;
+
         var name = nameField.text;
 
         // ルーム参加人数を設定
@@ -45,6 +56,8 @@ public class RoomMatch : MonoBehaviourPunCallbacks
     // ルーム参加
     public void JoinRoom()
     {
+        if (!PhotonNetwork.IsConnectedAndReady) return;
+
         var name = nameField.text;
 
         // ルーム参加
@@ -90,9 +103,14 @@ public class RoomMatch : MonoBehaviourPunCallbacks
 
                 // ルームを非公開にする
                 PhotonNetwork.CurrentRoom.IsOpen = false;
-                // シーン遷移
-                PhotonNetwork.LoadLevel("Main");
+                LoadScene();
             }
         }        
+    }
+
+    public void LoadScene()
+    {
+        // シーン遷移
+        PhotonNetwork.LoadLevel("Main");
     }
 }
