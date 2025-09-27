@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    float moveSpeed = 10.0f;
+    float moveSpeed = 5.0f;
     Vector3 moveVector = Vector3.zero;
 
     void OnEnable()

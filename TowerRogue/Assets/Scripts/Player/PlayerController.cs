@@ -7,28 +7,57 @@ public class PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject bulletSpawn;
+    Vector3 towerPos;
 
     Gamepad gamepad;
 
-    float moveSpeed = 3.0f;    // 移動速度
+    int maxHp = 100;
+    int hp = 0;
+    float moveSpeed = 2.0f;    // 移動速度
+    
     Vector3 direction = Vector3.zero;   // プレイヤーの向き
-    float time = 0;
-    float fireRate = 0.5f;
+    
+    float shotInterbal = 0; // 射撃後の経過時間
+    float fireRate = 0.5f;  // 射撃のクールタイム
+
+    float spawnInterbal = 0;    // 死亡後の経過時間
+    float spawnTime = 3.0f;     // 復活する時間
+
+    public bool isDead = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        towerPos = GameObject.Find("Tower").transform.position;
         gamepad = Gamepad.current;
+        hp = maxHp;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (photonView.IsMine)
-        {            
-            Moving();
-            Rotate();
-            Attack();
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                TakeDamage(100);
+            }
+
+            if (isDead)
+            {
+                spawnInterbal += Time.deltaTime;
+                if(spawnInterbal >= spawnTime)
+                {
+                    Respawn();
+                    spawnInterbal = 0;
+                }
+            }
+            else
+            {
+                Moving();
+                Rotate();
+                Attack();
+            }
         }
     }
 
@@ -90,16 +119,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
     // 攻撃処理
     void Attack()
     {
-        time += Time.deltaTime;
+        shotInterbal += Time.deltaTime;
         
         if (gamepad == null)
         {
             if (Input.GetMouseButton(0))
             {
-                if (time > fireRate)
+                if (shotInterbal > fireRate)
                 {
                     PhotonNetwork.Instantiate("Bullet", bulletSpawn.transform.position, transform.rotation);
-                    time = 0;
+                    shotInterbal = 0;
                 }
             }
         }
@@ -107,12 +136,40 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             if (gamepad.rightShoulder.isPressed)
             {
-                if (time > fireRate)
+                if (shotInterbal > fireRate)
                 {
                     PhotonNetwork.Instantiate("Bullet", bulletSpawn.transform.position, transform.rotation);
-                    time = 0;
+                    shotInterbal = 0;
                 }
             }
         }
+    }
+
+    // ダメージ処理
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+
+        if (hp <= 0)
+        {
+            Dead();
+        }
+    }
+
+    // 死亡処理
+    void Dead()
+    {
+        isDead = true;
+        transform.localScale = new Vector3(0, 0, 0);
+        transform.position = towerPos;
+    }
+
+    // 復活処理
+    void Respawn()
+    {
+        isDead = false;
+        transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        hp = maxHp;
+        shotInterbal = 0;
     }
 }
