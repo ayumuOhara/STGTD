@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 6239005857565167458}
   - component: {fileID: 4992534248185541010}
   - component: {fileID: 1898707411263480226}
+  - component: {fileID: 6137713578735767804}
+  - component: {fileID: 1174665955683459293}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,16 +104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6ec0c1e33a0d449987a88bcd4d480d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats:
-    enemyID: 0
-    enemyName: 
-    maxHp: 0
-    atk: 0
-    atkSpeed: 0
-    shotRange: 0
-    moveSpeed: 0
-    targetType: 0
-    attackType: 0
 --- !u!61 &4992534248185541010
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -185,3 +177,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6137713578735767804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5584400850539696075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &1174665955683459293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5584400850539696075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 6137713578735767804}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

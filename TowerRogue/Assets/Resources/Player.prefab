@@ -234,7 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4859956868560659804, guid: 3d1d8e479eaadcc45b11f6ad5063f4bf, type: 3}
   bulletSpawn: {fileID: 8590293276528065610}
-  isDead: 0
+  defaultScale: {x: 0.7, y: 0.7, z: 0.7}
 --- !u!58 &8599078611327513033
 CircleCollider2D:
   m_ObjectHideFlags: 0

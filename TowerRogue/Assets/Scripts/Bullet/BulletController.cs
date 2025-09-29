@@ -3,8 +3,15 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    float moveSpeed = 5.0f;
+    string shooterTag = string.Empty;
+
+    float moveSpeed = 10.0f;
     Vector3 moveVector = Vector3.zero;
+
+    public void SetShooter(string shooter)
+    {
+        shooterTag = shooter;
+    }
 
     void OnEnable()
     {
@@ -24,5 +31,26 @@ public class BulletController : MonoBehaviour
     void Move()
     {
         transform.position += moveVector * moveSpeed * Time.deltaTime;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (shooterTag == "Player" && !collision.gameObject.CompareTag("Player"))
+        {
+            EnemyController e = collision.gameObject.GetComponent<EnemyController>();
+            e.enemy.TakeDamage(1);
+        }
+        else if (shooterTag == "Enemy" && !collision.gameObject.CompareTag("Enemy"))
+        {
+            PlayerController p = collision.gameObject.GetComponent<PlayerController>();
+            p.player.TakeDamage(1);
+        }
+
+        Destroy(gameObject);
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

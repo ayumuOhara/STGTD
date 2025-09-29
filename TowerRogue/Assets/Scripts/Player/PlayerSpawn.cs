@@ -7,8 +7,8 @@ public class PlayerSpawn : MonoBehaviourPunCallbacks
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        PhotonNetwork.OfflineMode = true;
-        PhotonNetwork.JoinRandomRoom();
+        //PhotonNetwork.OfflineMode = true;
+        //PhotonNetwork.JoinRandomRoom();
 
         if (PhotonNetwork.IsMasterClient)
         {

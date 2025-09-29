@@ -20,8 +20,8 @@ public class EnemyStats
     public int enemyID;             // エネミー番号
     public string enemyName;        // エネミー名
     public int maxHp;               // 最大HP
-    public int atk;                 // 攻撃力
-    public int atkSpeed;            // 攻撃速度
+    public int atkPow;              // 攻撃力
+    public int atkRate;             // 攻撃間隔
     public float shotRange;         // 射程距離
     public int moveSpeed;           // 移動速度
 

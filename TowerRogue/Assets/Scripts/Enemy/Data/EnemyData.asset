@@ -15,19 +15,10 @@ MonoBehaviour:
   enemyStats:
   - enemyID: 0
     enemyName: zako_Player
-    maxHp: 10
-    atk: 5
-    atkSpeed: 0
+    maxHp: 5
+    atkPow: 0
+    atkRate: 0
     shotRange: 0
     moveSpeed: 2
     targetType: 0
-    attackType: 0
-  - enemyID: 1
-    enemyName: zako_Tower
-    maxHp: 10
-    atk: 5
-    atkSpeed: 0
-    shotRange: 0
-    moveSpeed: 3
-    targetType: 1
     attackType: 0

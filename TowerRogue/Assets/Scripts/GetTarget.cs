@@ -7,7 +7,11 @@ public static class GetTarget
     {
         GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
 
-        if (targets.Length == 1)
+        if(targets == null)
+        {
+            return Vector3.zero;
+        }
+        else if (targets.Length == 1)
         {
             return targets[0].transform.position;
         }

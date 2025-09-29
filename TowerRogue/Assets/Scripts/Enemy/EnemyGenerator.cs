@@ -1,12 +1,17 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class EnemyGenerator : MonoBehaviour
+public class EnemyGenerator : MonoBehaviourPunCallbacks
 {
     [SerializeField] EnemyData enemyData;
-    [SerializeField] GameObject enemy;
 
     float generateInterbal = 0;             // ¶¬Œã‚ÌŒo‰ßŽžŠÔ
     [SerializeField] float generateTime;    // ¶¬‚·‚éŽžŠÔ
+
+    void Awake()
+    {
+        PhotonCustomTypes.Register();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,16 +22,19 @@ public class EnemyGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        generateInterbal += Time.deltaTime;
-
-        if(generateInterbal >= generateTime)
+        if (PhotonNetwork.IsMasterClient)
         {
-            generateInterbal = 0;
-            var rnd_idx = Random.Range(0, enemyData.enemyStats.Count);
+            generateInterbal += Time.deltaTime;
 
-            GameObject obj = Instantiate(enemy, transform.position, Quaternion.identity);
-            EnemyController e = obj.GetComponent<EnemyController>();
-            e.SetStats(enemyData.enemyStats[rnd_idx]);
-        }
+            if (generateInterbal >= generateTime)
+            {
+                generateInterbal = 0;
+                var rnd_idx = Random.Range(0, enemyData.enemyStats.Count);
+
+                GameObject obj = PhotonNetwork.Instantiate("Enemy", transform.position, Quaternion.identity);
+                PhotonView photonView = obj.GetComponent<PhotonView>();
+                photonView.RPC("SetStats", RpcTarget.All, enemyData.enemyStats[rnd_idx]);
+            }
+        }        
     }
 }
