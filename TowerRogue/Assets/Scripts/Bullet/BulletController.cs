@@ -33,7 +33,7 @@ public class BulletController : MonoBehaviour
         transform.position += moveVector * moveSpeed * Time.deltaTime;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (shooterTag == "Player" && !collision.gameObject.CompareTag("Player"))
         {

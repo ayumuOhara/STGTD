@@ -24,6 +24,7 @@ public class EnemyStats
     public int atkRate;             // UŒ‚ŠÔŠu
     public float shotRange;         // Ë’ö‹——£
     public int moveSpeed;           // ˆÚ“®‘¬“x
+    public float exp;               // ŒoŒ±’l
 
     public TargetType targetType;   // ƒ^[ƒQƒbƒgŒXŒü
     public AttackType attackType;   // UŒ‚•û–@
